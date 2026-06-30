@@ -1,0 +1,13 @@
+.pio/
+.pioenvs/
+.piolibdeps/
+.clang_complete
+.gcc-flags.json
+.DS_Store
+*.zip
+*.tar.gz
+build/
+dist/
+__pycache__/
+*.pyc
+.env
