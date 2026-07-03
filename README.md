@@ -1,15 +1,8 @@
-![Header](header.png)
-
 <div align="center">
 
 # esp32c3-ili9488
 
 **ILI9488 + XPT2046 display driver for ESP32-C3 via LovyanGFX**
-
-[![License](https://img.shields.io/badge/license-MIT-2C2C2C?style=for-the-badge&labelColor=1E1E1E)](LICENSE)
-[![ESP32-C3](https://img.shields.io/badge/ESP32--C3-RISC--V-2C2C2C?style=for-the-badge&logo=espressif&labelColor=1E1E1E)]()
-[![LovyanGFX](https://img.shields.io/badge/LovyanGFX-1.2-2C2C2C?style=for-the-badge&labelColor=1E1E1E)]()
-[![PlatformIO](https://img.shields.io/badge/PlatformIO-build-2C2C2C?style=for-the-badge&logo=platformio&labelColor=1E1E1E)]()
 
 </div>
 
@@ -26,6 +19,8 @@ Minimal driver and test firmware for KMRTM35018-SPI (ILI9488 320x480 TFT display
 
 ## ■ Stack
 
+<div align="center">
+
 | Component | Technology |
 |-----------|------------|
 | MCU | ESP32-C3 (RISC-V) |
@@ -35,19 +30,17 @@ Minimal driver and test firmware for KMRTM35018-SPI (ILI9488 320x480 TFT display
 | GFX library | LovyanGFX 1.2 |
 | Build | PlatformIO |
 
-## ■ SPI Wiring
+</div>
 
-| ESP32-C3 | Display |
-|----------|---------|
-| GPIO 6 | SCLK |
-| GPIO 7 | MOSI (SDA) |
-| GPIO 5 | MISO (touch) |
-| GPIO 10 | CS (display) |
-| GPIO 4 | CS (touch) |
-| GPIO 3 | DC |
-| GPIO 2 | RST |
-| GPIO 0 | Touch INT |
-| GPIO 8 | Backlight |
+## ■ How It Works
+
+```
+1. MCU initializes the SPI bus and configures the ILI9488 display via LovyanGFX.
+2. XPT2046 touch controller starts on the same SPI bus with a dedicated CS pin.
+3. On boot, the display runs a self-test: red, green, and blue full-screen fills, then prints "ILI9488 OK!".
+4. Touch input via XPT2046 (GPIO 0 = Touch INT) draws a yellow dot at the calibrated screen coordinates on detection.
+5. GPIO 8 blinks every 2 s as a heartbeat to confirm the firmware loop is alive.
+```
 
 ## ■ Usage
 
@@ -63,6 +56,24 @@ pio device monitor
 ```
 
 On boot the display cycles through R/G/B fills, prints `ILI9488 OK!`, then accepts touch input for drawing.
+
+## ■ SPI Wiring
+
+<div align="center">
+
+| ESP32-C3 | Display |
+|----------|---------|
+| GPIO 6 | SCLK |
+| GPIO 7 | MOSI (SDA) |
+| GPIO 5 | MISO (touch) |
+| GPIO 10 | CS (display) |
+| GPIO 4 | CS (touch) |
+| GPIO 3 | DC |
+| GPIO 2 | RST |
+| GPIO 0 | Touch INT |
+| GPIO 8 | Backlight |
+
+</div>
 
 ## ■ License
 
