@@ -1,15 +1,8 @@
-![Header](header.png)
-
 <div align="center">
 
 # esp32c3-ili9488
 
 **Драйвер дисплея ILI9488 + XPT2046 для ESP32-C3 через LovyanGFX**
-
-[![License](https://img.shields.io/badge/license-MIT-2C2C2C?style=for-the-badge&labelColor=1E1E1E)](LICENSE)
-[![ESP32-C3](https://img.shields.io/badge/ESP32--C3-RISC--V-2C2C2C?style=for-the-badge&logo=espressif&labelColor=1E1E1E)]()
-[![LovyanGFX](https://img.shields.io/badge/LovyanGFX-1.2-2C2C2C?style=for-the-badge&labelColor=1E1E1E)]()
-[![PlatformIO](https://img.shields.io/badge/PlatformIO-build-2C2C2C?style=for-the-badge&logo=platformio&labelColor=1E1E1E)]()
 
 </div>
 
@@ -39,6 +32,31 @@
 
 </div>
 
+## ■ Как это работает
+
+```
+1. МК инициализирует шину SPI и конфигурирует дисплей ILI9488 через LovyanGFX.
+2. Контроллер тача XPT2046 запускается на той же шине SPI с выделенным пином CS.
+3. При старте дисплей проходит самотест: заливка красным, зелёным и синим на весь экран, затем выводит "ILI9488 OK!".
+4. Касание через XPT2046 (GPIO 0 = Touch INT) рисует жёлтую точку по откалиброванным координатам экрана при обнаружении.
+5. GPIO 8 мигает каждые 2с в качестве heartbeat, подтверждая, что цикл прошивки живёт.
+```
+
+## ■ Использование
+
+```bash
+# Сборка
+pio run
+
+# Прошивка
+pio run -t upload
+
+# Мониторинг serial
+pio device monitor
+```
+
+При старте дисплей проходит цикл заливки R/G/B, выводит `ILI9488 OK!`, после чего принимает касания для рисования.
+
 ## ■ Подключение SPI
 
 <div align="center">
@@ -57,21 +75,6 @@
 
 </div>
 
-## ■ Запуск
-
-```bash
-# Сборка
-pio run
-
-# Прошивка
-pio run -t upload
-
-# Мониторинг serial
-pio device monitor
-```
-
-При старте дисплей проходит цикл заливки R/G/B, выводит `ILI9488 OK!`, после чего принимает касания для рисования.
-
-## ■ License
+## ■ Лицензия
 
 MIT © [pluttan](https://github.com/pluttan)
